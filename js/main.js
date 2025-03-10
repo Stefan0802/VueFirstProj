@@ -6,5 +6,6 @@ let app = new Vue({
         imageGreenSocks: "./assets/vmSocks-green-onWhite.jpg",
         imageBlueSocks: "./assets/vmSocks-blue-onWhite.jpg",
         altText: "A pair of socks",
+        link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks",
     }
 })
