@@ -87,3 +87,16 @@ textarea {
     color: #16C0B0;
     text-decoration: underline;
 }
+
+
+.green{
+    color: white;
+    padding: 4px;
+    background-color: green;
+}
+
+.blue{
+    color: white;
+    padding: 4px;
+    background-color: blue;
+}

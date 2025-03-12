@@ -120,7 +120,6 @@ Vue.component('product-review', {
                     review: this.review,
                     rating: this.rating
                 }
-
                 eventBus.$emit('review-submitted', productReview)
                 this.name = null
                 this.review = null
@@ -160,7 +159,10 @@ Vue.component('product', {
             
             
             <product-details :details="details"></product-details>
-
+    
+            
+            
+            
             <div class="color-box" 
                     v-for="(variant, index) in variants" 
                     :key="variant.variantId"
@@ -168,6 +170,18 @@ Vue.component('product', {
                     @mouseover="updateProduct(index)">
             </div>
 
+             <p>
+                <label for="size">Size:</label>
+                <select id="size" v-model="selectedSize" > // выбираем размер который нам надо 
+                    <option v-for="size in sizes" :key="size">{{ size }}</option> // с помощью v-for выводим весь список размеров  
+                </select>
+            </p>
+            
+<!--                    <option value="S">S</option>-->
+<!--                    <option value="M">M</option>-->
+<!--                    <option value="L">L</option>-->
+<!--                    <option value="XL">XL</option>-->
+<!--                    <option value="XXL">XXL</option>-->
             
 
             <button v-on:click="addToCart" :disabled="!inStock" :class="{ disabledButton: !inStock }">Add to cart</button>
@@ -188,19 +202,24 @@ Vue.component('product', {
             brand: 'Vue Mastery',
             selectedVariant: 0,
             altText: "A pair of socks",
+            selectedSize: '', // добавил переменную для хранения выбранного размера
+            sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             details: ['80% cotton', '20% polyester', 'Gender-neutral'],
             variants: [
                 {
-                    variantId: 2234,
+                    variantId: 1,
                     variantColor: 'green',
-                    variantImage: "./assets/vmSocks-green-onWhite.jpg",
-                    variantQuantity: 10
+                    variantImage: "./assets/image/vmSocks-green-onWhite.jpg",
+                    variantQuantity: 10,
+
                 },
                 {
-                    variantId: 2235,
+                    variantId: 2,
                     variantColor: 'blue',
-                    variantImage: "./assets/vmSocks-blue-onWhite.jpg",
-                    variantQuantity: 0
+                    variantImage: "./assets/image/vmSocks-blue-onWhite.jpg",
+                    variantQuantity: 5,
+
+
                 }
             ],
             reviews: [],
@@ -215,7 +234,12 @@ Vue.component('product', {
         },
 
         addToCart() {
-            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
+            let cartDetails = {
+                id: this.variants[this.selectedVariant].variantId,
+                size: this.selectedSize
+            };
+            this.$emit('add-to-cart', cartDetails);
+
         },
         deleteToCart() {
             this.$emit('delete-to-cart', this.variants[this.selectedVariant].variantId);

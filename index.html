@@ -15,6 +15,12 @@
 
         <div class="cart">
             <p>Cart({{ cart.length }})</p>
+
+            <ul>
+                <li v-for="product in cart">
+                     <div v-if="product.id == '1' "> <div class="green">{{ product.size }}</div> </div> <div v-else> <div class="blue">{{ product.size }}</div> </div>
+                </li>
+            </ul>
         </div>
         
         <product :premium="premium" @add-to-cart="updateCart" @delete-to-cart="delCart"></product>
