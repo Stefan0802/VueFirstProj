@@ -1,3 +1,6 @@
+
+let eventBus = new Vue()
+
 Vue.component('product-tabs', {
     props: {
         reviews: {
@@ -11,10 +14,6 @@ Vue.component('product-tabs', {
         shipping: {
             type: Array,
             required: false
-        },
-        addReview: {
-            type: Function,
-            required: true
         }
     },
 
@@ -40,7 +39,7 @@ Vue.component('product-tabs', {
 
         </div>
         <div v-show="selectedTab === 'Make a Review'"> 
-            <product-review @review-submitted="addReview"></product-review>
+            <product-review></product-review>
         </div>
         <div v-show="selectedTab === 'Details'">
             <product-details :details="details"></product-details>
@@ -121,7 +120,8 @@ Vue.component('product-review', {
                     review: this.review,
                     rating: this.rating
                 }
-                this.$emit('review-submitted', productReview)
+
+                eventBus.$emit('review-submitted', productReview)
                 this.name = null
                 this.review = null
                 this.rating = null
@@ -229,6 +229,7 @@ Vue.component('product', {
         },
 
 
+
     },
     computed: {
         title() {
@@ -247,6 +248,12 @@ Vue.component('product', {
                 return 2.99
             }
         },
+
+    },
+    mounted(){
+        eventBus.$on('review-submitted', productReview => {
+            this.reviews.push(productReview)
+        })
 
     }
 });
